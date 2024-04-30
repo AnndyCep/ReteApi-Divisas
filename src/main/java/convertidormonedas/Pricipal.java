@@ -2,6 +2,7 @@
 
 package convertidormonedas;
 
+import java.io.IOException;
 import java.util.Scanner;
 
 
@@ -48,6 +49,7 @@ public class Pricipal {
                  case 4:
                      System.out.println(" Gracias por usar nuestro servicio\n "
                              + "Have a nice day!!!");
+                     nuv.listaTxt();
                       break;
                 default:
                     System.out.println(" La opcion ingresada es incorrecta");

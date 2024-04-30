@@ -1,17 +1,16 @@
 
 package convertidormonedas;
 
+import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.annotations.SerializedName;
 
 
 public class Convertidor {
     
-    @SerializedName("base_code")
     private String codigoBase;
-    @SerializedName("target_code")
     private String codigoDestino;
-    @SerializedName("conversion_result")
     private double cantidadConvetida;
     private double cantidadConvetir;
     private ApiConection apiConection;
@@ -19,6 +18,12 @@ public class Convertidor {
     public Convertidor() {
         this.apiConection = new ApiConection();
 //       
+    }
+
+    private Convertidor(TotuloOmbd tituloOmbd) {
+        this.codigoBase = tituloOmbd.base_code();
+        this.codigoDestino = tituloOmbd.target_code();
+        this.cantidadConvetida = tituloOmbd.conversion_result();
     }
 
     public void setCantidadConvetir(double cantidadConvetir) {
@@ -46,10 +51,11 @@ public class Convertidor {
         String key = "c3e6c40b014d54237261de43";
         String url = "https://v6.exchangerate-api.com/v6/" + key +"/pair/" + codigoBase+"/"+ codigoDestino +"/"+ cantidadConvertir ;
                 
-        String jsonRespuesta = apiConection.getApiResponse(url);
-               
+        String jsonRespuesta = apiConection.getApiResponse(url);    
         Gson gson = new Gson();
-        Convertidor miConver = gson.fromJson(jsonRespuesta, Convertidor.class);
+        
+        TotuloOmbd tituloOmbd = gson.fromJson(jsonRespuesta, TotuloOmbd.class);
+        Convertidor miConver = new Convertidor(tituloOmbd);
         
         if (validarRespuesta( miConver )) {
             miConver.setCantidadConvetir(cantidadConvertir);

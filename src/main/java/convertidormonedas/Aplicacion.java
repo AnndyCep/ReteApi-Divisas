@@ -1,6 +1,11 @@
 
 package convertidormonedas;
 
+import com.google.gson.FieldNamingPolicy;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 
 
@@ -25,6 +30,15 @@ public class Aplicacion {
             }        
         }
 
+    public void listaTxt() throws IOException{
+        Gson gson = new GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.UPPER_CAMEL_CASE)
+                .setPrettyPrinting()
+                .create();
+        FileWriter escritura = new FileWriter("archivo.json");
+        escritura.write(gson.toJson(listaConverticiones));
+        escritura.close();
+    }
+    
     @Override
     public String toString() {
         return "Aplicacion{" + ", listaConverticiones=" + listaConverticiones + '}';
